@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manoj Kumar R — Software Engineer</title>
+<meta name="description" content="Manoj Kumar R — software engineer building full-stack, mobile and applied-AI products. Chennai, India.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05060d; --bg2:#0b0e1a; --ink:#e9ecf5; --dim:#8b93ad; --line:rgba(255,255,255,.09);
+  --a:#5ef2d6; --b:#8a7dff; --c:#ff6ea9; --card:rgba(255,255,255,.035);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--b);color:#fff}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,transparent 40%,rgba(5,6,13,.85) 100%)}
+main,nav,footer{position:relative;z-index:2}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* progress + cursor */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--a),var(--b),var(--c));z-index:50}
+#cursor{position:fixed;width:28px;height:28px;border:1px solid var(--a);border-radius:50%;pointer-events:none;z-index:60;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s,border-color .2s;mix-blend-mode:difference}
+#cursor.big{width:60px;height:60px;background:rgba(94,242,214,.15);border-color:transparent}
+@media (hover:none){#cursor{display:none}}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:18px clamp(16px,5vw,56px);z-index:40;backdrop-filter:blur(12px);background:rgba(5,6,13,.45);border-bottom:1px solid var(--line)}
+.logo{font-weight:700;letter-spacing:.04em}
+.logo span{color:var(--a)}
+nav ul{display:flex;gap:clamp(12px,2.4vw,30px);list-style:none;font-size:14px}
+nav ul a{color:var(--dim);transition:color .2s;position:relative}
+nav ul a:hover{color:var(--ink)}
+nav ul a::after{content:'';position:absolute;left:0;bottom:-4px;height:1px;width:0;background:var(--a);transition:width .25s}
+nav ul a:hover::after{width:100%}
+@media(max-width:640px){nav ul li.hide{display:none}}
+
+section{padding:110px clamp(16px,6vw,80px);max-width:1200px;margin:0 auto}
+.tag{color:var(--a);font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px;display:block}
+h2{font-size:clamp(30px,5vw,52px);line-height:1.1;margin-bottom:36px;letter-spacing:-.02em}
+
+/* hero */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px}
+#hero h1{font-size:clamp(44px,10vw,124px);line-height:.95;letter-spacing:-.04em;font-weight:700}
+#hero h1 .l{display:inline-block;opacity:0;transform:translateY(60px) rotateX(-80deg);transform-origin:50% 100%;animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.grad{background:linear-gradient(100deg,var(--a),var(--b) 55%,var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.role{font-size:clamp(18px,2.6vw,28px);color:var(--dim);margin-top:26px;min-height:1.6em}
+.role b{color:var(--ink);font-weight:500}
+.caret{display:inline-block;width:2px;height:1em;background:var(--a);margin-left:3px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lead{max-width:620px;color:var(--dim);margin-top:22px;font-size:17px}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px}
+.btn{padding:14px 26px;border-radius:999px;font-weight:500;font-size:15px;border:1px solid var(--line);transition:transform .2s,box-shadow .3s,background .3s;display:inline-block}
+.btn.primary{background:linear-gradient(100deg,var(--a),var(--b));color:#05060d;border:none}
+.btn:hover{box-shadow:0 10px 40px -10px rgba(138,125,255,.7)}
+.scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--dim);font-size:11px;letter-spacing:.3em;display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll i{width:1px;height:44px;background:linear-gradient(var(--a),transparent);animation:drop 1.8s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+#hero{position:relative}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* about */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+.about p{color:var(--dim);font-size:18px;margin-bottom:16px}
+.about p b{color:var(--ink);font-weight:500}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;backdrop-filter:blur(8px)}
+.stat .n{font-size:44px;font-weight:700;line-height:1}
+.stat .t{color:var(--dim);font-size:13px;margin-top:8px}
+@media(max-width:820px){.about{grid-template-columns:1fr}}
+
+/* timeline */
+.tl{border-left:1px solid var(--line);padding-left:30px;display:grid;gap:44px}
+.job{position:relative}
+.job::before{content:'';position:absolute;left:-36px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--a);box-shadow:0 0 0 5px rgba(94,242,214,.15),0 0 24px var(--a)}
+.job h3{font-size:24px}
+.job .meta{color:var(--a);font-size:13px;margin:4px 0 14px}
+.job ul{list-style:none;display:grid;gap:10px;color:var(--dim)}
+.job li{padding-left:20px;position:relative}
+.job li::before{content:'▹';position:absolute;left:0;color:var(--b)}
+.job li b{color:var(--ink);font-weight:500}
+
+/* projects */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px;perspective:1400px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px;transform-style:preserve-3d;transition:transform .15s ease-out,border-color .3s;overflow:hidden;backdrop-filter:blur(10px);min-height:290px;display:flex;flex-direction:column}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(138,125,255,.22),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{border-color:rgba(138,125,255,.5)}
+.card:hover::before{opacity:1}
+.card>*{transform:translateZ(30px)}
+.card .no{color:var(--dim);font-size:12px}
+.card .badge{position:absolute;top:26px;right:26px;font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid rgba(94,242,214,.4);color:var(--a)}
+.card h3{font-size:25px;margin:14px 0 4px;letter-spacing:-.01em}
+.card .sub{color:var(--b);font-size:13px;margin-bottom:12px}
+.card p{color:var(--dim);font-size:15px;flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.chips span{font-size:11px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--ink);font-family:'JetBrains Mono',monospace}
+.card a.link{margin-top:16px;font-size:13px;color:var(--a)}
+.card a.link:hover{text-decoration:underline}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.sk{border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--card);backdrop-filter:blur(8px)}
+.sk h4{font-size:13px;color:var(--a);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;font-weight:500}
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:22px 0;margin-top:70px;white-space:nowrap;position:relative;z-index:2}
+.marquee div{display:inline-block;animation:slide 30s linear infinite;font-size:clamp(26px,5vw,56px);font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.22)}
+.marquee b{color:var(--a);-webkit-text-stroke:0;margin:0 26px;font-weight:400}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* contact */
+#contact{text-align:center;padding-bottom:70px}
+#contact h2{font-size:clamp(38px,8vw,96px);margin-bottom:20px}
+#contact p{color:var(--dim);max-width:520px;margin:0 auto 34px}
+.mail{font-size:clamp(18px,3.4vw,34px);border-bottom:1px solid var(--a);padding-bottom:4px;transition:color .2s}
+.mail:hover{color:var(--a)}
+.socials{display:flex;justify-content:center;gap:14px;margin-top:40px;flex-wrap:wrap}
+footer{text-align:center;color:var(--dim);font-size:12px;padding:30px 16px 40px;border-top:1px solid var(--line)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv,#hero h1 .l{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="cursor"></div>
+<canvas id="bg"></canvas>
+<div class="grain"></div>
+
+<nav>
+  <a href="#hero" class="logo mono">MK<span>.</span></a>
+  <ul>
+    <li class="hide"><a href="#about">About</a></li>
+    <li><a href="#work">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li class="hide"><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+<section id="hero">
+  <span class="tag mono">// hello, world</span>
+  <h1 id="title" aria-label="Manoj Kumar R"></h1>
+  <div class="role">I build <b id="typed"></b><span class="caret"></span></div>
+  <p class="lead">Software engineer in Chennai shipping production products across web, mobile and desktop — and wiring AI into them.</p>
+  <div class="cta">
+    <a class="btn primary mag" href="#projects">See my work</a>
+    <a class="btn mag" href="resume.pdf" target="_blank" rel="noopener">Download résumé</a>
+    <a class="btn mag" href="https://github.com/superior-v" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="scroll mono">SCROLL<i></i></div>
+</section>
+
+<section id="about">
+  <span class="tag mono rv">01 — about</span>
+  <h2 class="rv">Student by timetable.<br><span class="grad">Shipping engineer by habit.</span></h2>
+  <div class="about">
+    <div class="rv">
+      <p>I'm a 4th-year <b>Integrated M.Tech Computer Science</b> student at Sri Sairam Engineering College (CGPA 8.32), and for the past two years a <b>Software Development Intern at Genik Technologies</b>.</p>
+      <p>There I've helped take four products from idea to real users: a livestock-management app for farms, a CRM dental clinics run on daily, an AI content-repurposing platform, and a desktop LaTeX editor for researchers.</p>
+      <p>On the side I train <b>computer-vision models in PyTorch</b> and build LLM-powered tools. I like work that ends with someone actually using it.</p>
+    </div>
+    <div class="stats rv">
+      <div class="stat"><div class="n grad" data-count="4">0</div><div class="t">products shipped to production</div></div>
+      <div class="stat"><div class="n grad" data-count="2" data-suffix="+">0</div><div class="t">years building at Genik</div></div>
+      <div class="stat"><div class="n grad" data-count="18">0</div><div class="t">public GitHub repositories</div></div>
+      <div class="stat"><div class="n grad" data-count="8.32" data-dec="2">0</div><div class="t">CGPA, Integrated M.Tech CSE</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <span class="tag mono rv">02 — experience</span>
+  <h2 class="rv">Where I've worked</h2>
+  <div class="tl">
+    <div class="job rv">
+      <h3>Software Development Intern · Genik Technologies</h3>
+      <div class="meta mono">2024 — PRESENT · CHENNAI</div>
+      <ul>
+        <li>Built and shipped <b>Rabbitary</b>, a Flutter livestock and inventory app with offline SQLite storage, breeding reminders, charts, CSV/PDF export and in-app purchases.</li>
+        <li>Built and launched <b>Dent CRM</b> on React, Vite and Firebase with Gemini API features — used daily by dental clinic staff.</li>
+        <li>Developed <b>ReArticle</b>, an AI app that turns long articles into social posts, emails and short-form content.</li>
+        <li>Contributed to <b>SuperTex</b>, an Electron + React desktop LaTeX editor with live PDF preview and IEEE, Springer and Elsevier templates.</li>
+        <li>Worked across the full lifecycle: requirements, architecture, development, QA, deployment and production support.</li>
+      </ul>
+    </div>
+    <div class="job rv">
+      <h3>Web Development Intern · InternPe</h3>
+      <div class="meta mono">2023</div>
+      <ul>
+        <li>Built responsive web interfaces with HTML, CSS and JavaScript and improved usability with the team.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <span class="tag mono rv">03 — projects</span>
+  <h2 class="rv">Things I've built</h2>
+  <div class="grid">
+    <article class="card rv">
+      <span class="no mono">01</span><span class="badge mono">LIVE · GENIK</span>
+      <h3>SuperTex</h3><div class="sub">Desktop LaTeX editor</div>
+      <p>An Electron desktop app for writing research papers: CodeMirror source editor, live PDF preview, ready-made IEEE, Springer, Elsevier and NeurIPS templates, and auto-updating releases.</p>
+      <div class="chips"><span>Electron</span><span>React</span><span>Vite</span><span>CodeMirror</span><span>Firebase</span></div>
+    </article>
+    <article class="card rv">
+      <span class="no mono">02</span><span class="badge mono">LIVE · GENIK</span>
+      <h3>Rabbitary</h3><div class="sub">Livestock &amp; inventory management</div>
+      <p>Tracks animals, breeding cycles and stock for farming organisations. Works offline, sends reminders, charts performance and exports CSV and PDF reports.</p>
+      <div class="chips"><span>Flutter</span><span>Dart</span><span>SQLite</span><span>In-app purchases</span></div>
+      <a class="link mono" href="https://github.com/superior-v/rabbitry" target="_blank" rel="noopener">view code ↗</a>
+    </article>
+    <article class="card rv">
+      <span class="no mono">03</span><span class="badge mono">LIVE · GENIK</span>
+      <h3>Dent CRM</h3><div class="sub">Dental clinic management</div>
+      <p>Patient records, appointment scheduling, billing with PDF invoices and treatment history in one place — the system clinic staff open every morning.</p>
+      <div class="chips"><span>React</span><span>Vite</span><span>Firebase</span><span>Tailwind</span><span>Gemini API</span></div>
+      <a class="link mono" href="https://github.com/superior-v/dentcrm" target="_blank" rel="noopener">view code ↗</a>
+    </article>
+    <article class="card rv">
+      <span class="no mono">04</span><span class="badge mono">LIVE · GENIK</span>
+      <h3>ReArticle</h3><div class="sub">AI content repurposing</div>
+      <p>Paste a long-form article, get social posts, emails and short-form assets back. Web and mobile, built for marketing teams that publish everywhere.</p>
+      <div class="chips"><span>Next.js</span><span>OpenAI API</span><span>Firebase</span><span>React Native</span></div>
+    </article>
+    <article class="card rv">
+      <span class="no mono">05</span><span class="badge mono">ML</span>
+      <h3>Flower Classifier</h3><div class="sub">Computer vision pipeline</div>
+      <p>End-to-end 3-class image classifier: dataset collection and cleaning, background removal, augmentation, then a transfer-learning CNN trained and evaluated in PyTorch.</p>
+      <div class="chips"><span>Python</span><span>PyTorch</span><span>OpenCV</span><span>rembg</span></div>
+    </article>
+    <article class="card rv">
+      <span class="no mono">06</span><span class="badge mono">AI</span>
+      <h3>UnbiasedAI</h3><div class="sub">Blind recruitment platform</div>
+      <p>Uses GPT-4 to strip identity signals from job applications so screening is about skill, plus an interview-prep chatbot. Google OAuth and JWT auth.</p>
+      <div class="chips"><span>Next.js 14</span><span>TypeScript</span><span>Prisma</span><span>MongoDB</span><span>OpenAI</span></div>
+    </article>
+    <article class="card rv">
+      <span class="no mono">07</span><span class="badge mono">HACKATHON</span>
+      <h3>HarvestHub</h3><div class="sub">Smart resource redistribution</div>
+      <p>Matches surplus food, clothing and electronics with donors within 2 km through an IoT touchscreen booth. Semifinalist at Project DeepBlue.</p>
+      <div class="chips"><span>Flutter</span><span>Firebase</span><span>Google Maps</span><span>IoT</span></div>
+      <a class="link mono" href="https://github.com/superior-v/harvest-hub" target="_blank" rel="noopener">view code ↗</a>
+    </article>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div>
+  REACT<b>✦</b>NEXT.JS<b>✦</b>FLUTTER<b>✦</b>PYTORCH<b>✦</b>ELECTRON<b>✦</b>NODE.JS<b>✦</b>FIREBASE<b>✦</b>OPENAI<b>✦</b>TYPESCRIPT<b>✦</b>
+  REACT<b>✦</b>NEXT.JS<b>✦</b>FLUTTER<b>✦</b>PYTORCH<b>✦</b>ELECTRON<b>✦</b>NODE.JS<b>✦</b>FIREBASE<b>✦</b>OPENAI<b>✦</b>TYPESCRIPT<b>✦</b>
+</div></div>
+
+<section id="skills">
+  <span class="tag mono rv">04 — skills</span>
+  <h2 class="rv">My toolkit</h2>
+  <div class="skills">
+    <div class="sk rv"><h4>Languages</h4><div class="chips"><span>TypeScript</span><span>JavaScript</span><span>Python</span><span>Dart</span><span>Java</span><span>C</span><span>SQL</span></div></div>
+    <div class="sk rv"><h4>AI / ML</h4><div class="chips"><span>PyTorch</span><span>OpenCV</span><span>CNNs</span><span>Transfer learning</span><span>OpenAI API</span><span>Gemini API</span></div></div>
+    <div class="sk rv"><h4>Web</h4><div class="chips"><span>React 18</span><span>Next.js 14</span><span>Node.js</span><span>Express</span><span>Vite</span><span>Tailwind CSS</span><span>Prisma</span></div></div>
+    <div class="sk rv"><h4>Mobile &amp; Desktop</h4><div class="chips"><span>Flutter</span><span>React Native</span><span>Electron</span></div></div>
+    <div class="sk rv"><h4>Data &amp; Auth</h4><div class="chips"><span>Firebase</span><span>MongoDB</span><span>MySQL</span><span>SQLite</span><span>JWT</span><span>Google OAuth</span></div></div>
+    <div class="sk rv"><h4>Tools</h4><div class="chips"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Android Studio</span><span>Vercel</span></div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <span class="tag mono rv">05 — contact</span>
+  <h2 class="rv">Let's build<br><span class="grad">something real.</span></h2>
+  <p class="rv">Open to internships and roles in AI, ML, full-stack web, mobile and software engineering.</p>
+  <a class="mail rv mag" href="mailto:mano773737@gmail.com">mano773737@gmail.com</a>
+  <div class="socials rv">
+    <a class="btn mag" href="https://github.com/superior-v" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn mag" href="https://www.linkedin.com/in/manoj-kumar-r" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn mag" href="tel:+919360831790">+91 93608 31790</a>
+  </div>
+</section>
+</main>
+<footer class="mono">© <span id="yr"></span> Manoj Kumar R · Chennai, India</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ---------- hero title: per-letter 3D flip-in ---------- */
+(function(){
+  const t = document.getElementById('title');
+  const lines = [['Manoj',''],['Kumar R.','grad']];
+  let i = 0;
+  lines.forEach(([txt,cls],li)=>{
+    const row = document.createElement('div'); row.style.perspective='800px';
+    [...txt].forEach(ch=>{
+      const s = document.createElement('span');
+      s.className = 'l ' + cls; s.textContent = ch === ' ' ? ' ' : ch;
+      s.style.animationDelay = (0.15 + i++*0.05)+'s';
+      row.appendChild(s);
+    });
+    t.appendChild(row);
+  });
+})();
+
+/* ---------- typed roles ---------- */
+(function(){
+  const el = document.getElementById('typed');
+  const words = ['AI-powered products.','full-stack web apps.','Flutter mobile apps.','desktop software.','computer-vision models.'];
+  if(reduce){ el.textContent = words[0]; return; }
+  let w=0,c=0,del=false;
+  (function tick(){
+    const word = words[w];
+    el.textContent = word.slice(0,c);
+    let d = del ? 35 : 70;
+    if(!del && c===word.length){ del=true; d=1500; }
+    else if(del && c===0){ del=false; w=(w+1)%words.length; d=300; }
+    else c += del ? -1 : 1;
+    setTimeout(tick,d);
+  })();
+})();
+
+/* ---------- scroll reveal + counters ---------- */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('[data-count]').forEach(count);
+    io.unobserve(e.target);
+  });
+},{threshold:.15});
+document.querySelectorAll('.rv').forEach((el,i)=>{ el.style.transitionDelay = (i%4)*70+'ms'; io.observe(el); });
+function count(el){
+  const end = parseFloat(el.dataset.count), dec = +el.dataset.dec||0, suf = el.dataset.suffix||'';
+  if(reduce){ el.textContent = end.toFixed(dec)+suf; return; }
+  const t0 = performance.now();
+  (function f(t){
+    const p = Math.min((t-t0)/1400,1), e = 1-Math.pow(1-p,3);
+    el.textContent = (end*e).toFixed(dec)+suf;
+    if(p<1) requestAnimationFrame(f);
+  })(t0);
+}
+
+/* ---------- cursor, magnetic buttons, card tilt ---------- */
+const cur = document.getElementById('cursor');
+let mx=0,my=0,cx=innerWidth/2,cy=innerHeight/2,tx=cx,ty=cy;
+addEventListener('pointermove',e=>{ tx=e.clientX; ty=e.clientY; mx=e.clientX/innerWidth-.5; my=e.clientY/innerHeight-.5; });
+(function follow(){ cx+=(tx-cx)*.18; cy+=(ty-cy)*.18; cur.style.left=cx+'px'; cur.style.top=cy+'px'; requestAnimationFrame(follow); })();
+document.querySelectorAll('a,.card').forEach(el=>{
+  el.addEventListener('pointerenter',()=>cur.classList.add('big'));
+  el.addEventListener('pointerleave',()=>cur.classList.remove('big'));
+});
+if(!reduce){
+  document.querySelectorAll('.mag').forEach(el=>{
+    el.addEventListener('pointermove',e=>{
+      const r = el.getBoundingClientRect();
+      el.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`;
+    });
+    el.addEventListener('pointerleave',()=>el.style.transform='');
+  });
+  document.querySelectorAll('.card').forEach(el=>{
+    el.addEventListener('pointermove',e=>{
+      const r = el.getBoundingClientRect(), x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height;
+      el.style.setProperty('--mx',x*100+'%'); el.style.setProperty('--my',y*100+'%');
+      el.style.transform = `rotateY(${(x-.5)*14}deg) rotateX(${(.5-y)*14}deg) translateZ(8px)`;
+    });
+    el.addEventListener('pointerleave',()=>el.style.transform='');
+  });
+}
+
+/* ---------- scroll progress ---------- */
+let sp = 0;
+function onScroll(){
+  const h = document.documentElement.scrollHeight - innerHeight;
+  sp = h>0 ? scrollY/h : 0;
+  document.getElementById('progress').style.width = sp*100+'%';
+}
+addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+/* ---------- three.js scene: a "neural" particle sphere that morphs as you scroll ---------- */
+(function(){
+  if(!window.THREE) return;
+  const canvas = document.getElementById('bg');
+  let renderer;
+  try{ renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true}); }catch(e){ return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(55,1,.1,100); cam.position.z = 7;
+
+  const N = innerWidth < 700 ? 1400 : 2800;
+  // three target shapes: sphere, torus knot, wave grid
+  const shapes = [new Float32Array(N*3), new Float32Array(N*3), new Float32Array(N*3)];
+  for(let i=0;i<N;i++){
+    const u = Math.acos(1-2*(i+.5)/N), v = Math.PI*(1+Math.sqrt(5))*i;      // fibonacci sphere
+    shapes[0].set([2.3*Math.sin(u)*Math.cos(v), 2.3*Math.sin(u)*Math.sin(v), 2.3*Math.cos(u)], i*3);
+    const t = i/N*Math.PI*2*3, p=2, q=3, r = 1.5+.6*Math.cos(q*t/1), jit = ()=> (Math.random()-.5)*.35; // torus knot
+    shapes[1].set([r*Math.cos(p*t/1)+jit(), r*Math.sin(p*t/1)+jit(), .9*Math.sin(q*t/1)*1.4+jit()], i*3);
+    const g = Math.ceil(Math.sqrt(N)), gx = (i%g)/g-.5, gz = Math.floor(i/g)/g-.5;      // wave plane
+    shapes[2].set([gx*11, Math.sin(gx*9)*Math.cos(gz*9)*.7-1.2, gz*11], i*3);
+  }
+  const pos = new Float32Array(shapes[0]);
+  const col = new Float32Array(N*3);
+  const A = new THREE.Color('#5ef2d6'), B = new THREE.Color('#8a7dff'), C = new THREE.Color('#ff6ea9'), tmp = new THREE.Color();
+  for(let i=0;i<N;i++){ const k=i/N; tmp.copy(k<.5?A:B).lerp(k<.5?B:C,(k<.5?k:k-.5)*2); col.set([tmp.r,tmp.g,tmp.b],i*3); }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+  const pts = new THREE.Points(geo,new THREE.PointsMaterial({size:.035,vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false}));
+  scene.add(pts);
+
+  // wireframe core + orbiting rings
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.25,1),new THREE.MeshBasicMaterial({color:0x8a7dff,wireframe:true,transparent:true,opacity:.28}));
+  scene.add(core);
+  const rings = [];
+  [[3.1,.5,0x5ef2d6],[3.5,-.9,0xff6ea9]].forEach(([r,tilt,c])=>{
+    const m = new THREE.Mesh(new THREE.TorusGeometry(r,.006,8,160),new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:.45}));
+    m.rotation.x = Math.PI/2+tilt; scene.add(m); rings.push(m);
+  });
+
+  // distant stars
+  const sg = new THREE.BufferGeometry(), sN=900, sp3 = new Float32Array(sN*3);
+  for(let i=0;i<sN*3;i++) sp3[i] = (Math.random()-.5)*60;
+  sg.setAttribute('position',new THREE.BufferAttribute(sp3,3));
+  const stars = new THREE.Points(sg,new THREE.PointsMaterial({size:.03,color:0xffffff,transparent:true,opacity:.5}));
+  scene.add(stars);
+
+  function resize(){ renderer.setSize(innerWidth,innerHeight,false); cam.aspect=innerWidth/innerHeight; cam.position.z = cam.aspect<1 ? 11 : 7; cam.updateProjectionMatrix(); }
+  addEventListener('resize',resize); resize();
+
+  const clock = new THREE.Clock(); let px=0,py=0,ss=0;
+  function frame(){
+    const t = clock.getElapsedTime();
+    ss += (sp-ss)*.06;                               // smoothed scroll 0..1
+    const seg = Math.min(ss*2,1.999), a = Math.floor(seg), f = seg-a, e = f*f*(3-2*f);
+    const S0 = shapes[a], S1 = shapes[a+1], p = geo.attributes.position.array;
+    for(let i=0;i<N*3;i+=3){
+      const w = Math.sin(t*1.3+i*.013)*.045;
+      p[i]   += (S0[i]  +(S1[i]  -S0[i]  )*e + w - p[i]  )*.08;
+      p[i+1] += (S0[i+1]+(S1[i+1]-S0[i+1])*e + w - p[i+1])*.08;
+      p[i+2] += (S0[i+2]+(S1[i+2]-S0[i+2])*e     - p[i+2])*.08;
+    }
+    geo.attributes.position.needsUpdate = true;
+    px += (mx-px)*.05; py += (my-py)*.05;
+    pts.rotation.y = t*.08 + px*.9 + ss*3; pts.rotation.x = py*.6;
+    core.rotation.x = t*.2; core.rotation.y = t*.3; core.scale.setScalar(Math.max(.001,1-ss*1.6));
+    rings.forEach((r,i)=>{ r.rotation.z = t*(.15+i*.1); r.material.opacity = .45*(1-Math.min(ss*2,1)); });
+    stars.rotation.y = t*.01;
+    // sit to the right of the hero text on wide screens, centre afterwards
+    const off = innerWidth>900 ? 2.6*(1-Math.min(ss*4,1)) : 0;
+    pts.position.x = core.position.x = off; rings.forEach(r=>r.position.x=off);
+    cam.position.x = px*.6; cam.position.y = -py*.6; cam.lookAt(0,0,0);
+    renderer.render(scene,cam);
+    if(!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>
